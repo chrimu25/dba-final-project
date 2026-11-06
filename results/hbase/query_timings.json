@@ -1,0 +1,26 @@
+{
+  "user": "user_000000",
+  "product": "prod_00000",
+  "queries": {
+    "Q1 latest 5 sessions (prefix scan)": {
+      "ms": 10.5,
+      "rows": 5
+    },
+    "Q2 sessions in September (start/stop row)": {
+      "ms": 10.08,
+      "rows": 8
+    },
+    "Q3 full rows incl. page views and cart (all families) for comparison": {
+      "ms": 17.81,
+      "rows": 5
+    },
+    "Q4 prod_00000 daily metrics, September (start/stop row)": {
+      "ms": 10.21,
+      "rows": 30
+    },
+    "Q5 converted sessions of ALL users (full scan + filter, contrast)": {
+      "ms": 3553.31,
+      "rows": 81406
+    }
+  }
+}

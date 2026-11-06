@@ -1,0 +1,7 @@
+{
+  "read HBase (3 families, ~400k rows)": 25.78,
+  "read MongoDB session transactions": 0.83,
+  "session funnel": 9.63,
+  "product funnel": 1.44,
+  "write product_funnel to MongoDB": 0.7
+}

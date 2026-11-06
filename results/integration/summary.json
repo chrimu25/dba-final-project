@@ -1,0 +1,54 @@
+{
+  "session_funnel": [
+    {
+      "stage": "sessions",
+      "sessions": 399504,
+      "pct_of_all": 100.0,
+      "pct_of_previous": 100.0
+    },
+    {
+      "stage": "viewed_product",
+      "sessions": 394642,
+      "pct_of_all": 98.78,
+      "pct_of_previous": 98.78
+    },
+    {
+      "stage": "added_to_cart",
+      "sessions": 259786,
+      "pct_of_all": 65.03,
+      "pct_of_previous": 65.83
+    },
+    {
+      "stage": "reached_checkout",
+      "sessions": 174770,
+      "pct_of_all": 43.75,
+      "pct_of_previous": 67.27
+    },
+    {
+      "stage": "flagged_converted",
+      "sessions": 81406,
+      "pct_of_all": 20.38,
+      "pct_of_previous": 46.58
+    },
+    {
+      "stage": "purchased",
+      "sessions": 51659,
+      "pct_of_all": 12.93,
+      "pct_of_previous": 63.46
+    }
+  ],
+  "flagged_but_no_purchase": 29747,
+  "of_which_reached_checkout": 29747,
+  "consistency": {
+    "bought_not_in_cart": 0,
+    "carted_not_viewed": 0,
+    "bought_lines": 81847
+  },
+  "timings": {
+    "read HBase (3 families, ~400k rows)": 25.78,
+    "read MongoDB session transactions": 0.83,
+    "session funnel": 9.63,
+    "product funnel": 1.44,
+    "write product_funnel to MongoDB": 0.7
+  }
+}

@@ -1,0 +1,8 @@
+data/
+lake/
+hbase_data/
+pilot/
+.venv/
+__pycache__/
+*.zip
+.DS_Store

@@ -1,0 +1,32 @@
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+[Stage 58:==============================>                         (35 + 8) / 64][Stage 58:=========================================>              (47 + 8) / 64][Stage 58:==============> (59 + 5) / 64][Stage 61:>                (0 + 3) / 64][Stage 61:>                                                        (0 + 8) / 64][Stage 61:=======>                                                 (8 + 8) / 64][Stage 61:=================>                                      (20 + 8) / 64][Stage 61:============================>                           (32 + 8) / 64][Stage 61:=========================================>              (47 + 8) / 64][Stage 61:============================================>           (51 + 8) / 64][Stage 61:===============================================>        (54 + 8) / 64][Stage 68:=============>                                          (15 + 8) / 64][Stage 68:=====================>                                  (25 + 8) / 64][Stage 68:=================================>                      (38 + 8) / 64][Stage 68:===========================================>            (50 + 8) / 64]                                                                                [Stage 90:==================================>                     (39 + 8) / 64][Stage 90:===============================================>        (54 + 8) / 64]                                                                                  read HBase (3 families, ~400k rows)         25.78 s
+  read MongoDB session transactions            0.83 s
+  HBase: 399,504 sessions, 1,382,699 product views, 414,901 cart lines
+  MongoDB: 256,611 session-linked transactions, 405,415 items
+  session funnel                               9.63 s
+
+=== Session funnel (HBase sample + MongoDB purchases) ===
+            stage  sessions  pct_of_all  pct_of_previous
+         sessions    399504      100.00           100.00
+   viewed_product    394642       98.78            98.78
+    added_to_cart    259786       65.03            65.83
+ reached_checkout    174770       43.75            67.27
+flagged_converted     81406       20.38            46.58
+        purchased     51659       12.93            63.46
+
+=== Funnel by device (% of sessions) ===
+device_type  sessions  viewed_product_pct  added_to_cart_pct  reached_checkout_pct  flagged_converted_pct  purchased_pct
+     tablet    134069               98.78              65.15                 43.83                  20.45          13.05
+    desktop    132903               98.76              64.84                 43.77                  20.31          12.84
+     mobile    132532               98.81              65.10                 43.64                  20.37          12.90
+
+Flagged 'converted' but no transaction in MongoDB: 29,747 sessions (the generator's transaction cap / stock failures)
+
+Consistency HBase vs MongoDB: purchased lines 81,847 | purchased but not in the session's cart: 0 | carted but never viewed: 0
+  product funnel                               1.44 s
+
+Product level: 1,381,824 views -> 414,901 carts (30.0%) -> 81,847 purchases (19.7% of carts)
+Spread of view->purchase rate (products with >=300 view sessions, n=2274): p5 3.4% | median 4.9% | p95 6.7%
+  write product_funnel to MongoDB              0.70 s
+  MongoDB product_funnel documents: 4,827

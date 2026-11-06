@@ -1,0 +1,82 @@
+{
+ "pipeline": [
+  {
+   "$group": {
+    "_id": "$user_id",
+    "orders": {
+     "$sum": 1
+    },
+    "spent": {
+     "$sum": "$total"
+    },
+    "first_purchase": {
+     "$min": "$timestamp"
+    },
+    "last_purchase": {
+     "$max": "$timestamp"
+    },
+    "session_orders": {
+     "$sum": {
+      "$cond": [
+       {
+        "$eq": [
+         "$channel",
+         "session"
+        ]
+       },
+       1,
+       0
+      ]
+     }
+    }
+   }
+  },
+  {
+   "$set": {
+    "spent": {
+     "$round": [
+      "$spent",
+      2
+     ]
+    },
+    "avg_order_value": {
+     "$round": [
+      {
+       "$divide": [
+        "$spent",
+        "$orders"
+       ]
+      },
+      2
+     ]
+    },
+    "recency_days": {
+     "$dateDiff": {
+      "startDate": "$last_purchase",
+      "endDate": "2026-11-06 13:11:41.899000",
+      "unit": "day"
+     }
+    }
+   }
+  },
+  {
+   "$merge": {
+    "into": "users",
+    "on": "_id",
+    "whenMatched": [
+     {
+      "$set": {
+       "purchase_summary": "$$new"
+      }
+     },
+     {
+      "$unset": "purchase_summary._id"
+     }
+    ],
+    "whenNotMatched": "discard"
+   }
+  }
+ ],
+ "seconds": 0.486,
+ "result": []
+}

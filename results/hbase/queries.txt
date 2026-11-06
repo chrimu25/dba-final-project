@@ -1,0 +1,37 @@
+example user: user_000000
+
+=== Q1 latest 5 sessions (prefix scan): 5 rows in 10.5 ms ===
+  user_000000#8206051285#sess_6e66c7b03b | 2026-11-06T07:05:14.340038 | 3221 | mobile | abandoned | 14
+  user_000000#8206156666#sess_3c77444be0 | 2026-11-05T01:48:53.452259 | 636 | desktop | abandoned | 13
+  user_000000#8206232325#sess_77d3c27fb8 | 2026-11-04T04:47:54.540744 | 1815 | tablet | converted | 14
+  user_000000#8206380997#sess_c5f24e4718 | 2026-11-02T11:30:02.404408 | 1552 | mobile | abandoned | 15
+  user_000000#8206418488#sess_3e46b666d8 | 2026-11-02T01:05:11.560942 | 264 | mobile | browsed | 5
+
+=== Q2 sessions in September (start/stop row): 8 rows in 10.1 ms ===
+  user_000000#8209434429#sess_acc441f63f | 2026-09-28T03:19:30.296305 | 100 | mobile | converted | 9
+  user_000000#8209848705#sess_948002c71b | 2026-09-23T08:14:54.250467 | 1664 | tablet | abandoned | 9
+  user_000000#8210016550#sess_d4b0d6d76c | 2026-09-21T09:37:29.568424 | 1287 | tablet | abandoned | 10
+  user_000000#8210552352#sess_5c83e2f396 | 2026-09-15T04:47:27.612438 | 690 | mobile | converted | 16
+  user_000000#8210593257#sess_6f1795c157 | 2026-09-14T17:25:42.894644 | 206 | tablet | abandoned | 12
+  user_000000#8211182617#sess_109b210774 | 2026-09-07T21:43:02.041188 | 3029 | mobile | browsed | 6
+  user_000000#8211185190#sess_04a6321ebc | 2026-09-07T21:00:09.840304 | 3514 | tablet | abandoned | 7
+  user_000000#8211240708#sess_862960de27 | 2026-09-07T05:34:51.934402 | 3498 | tablet | abandoned | 14
+
+=== Q3 full rows incl. page views and cart (all families) for comparison: 5 rows in 17.8 ms ===
+  cells per row with all families: [32, 31, 31, 31, 20] | first page view: {"timestamp":"2026-11-06T07:05:14.340038","page_type":"search","product_id":null,"category_id":null,"view_duration":169}
+
+=== Q4 prod_00000 daily metrics, September (start/stop row): 30 rows in 10.2 ms ===
+  prod_00000#20260901 {'sessions': 4, 'view_seconds': 762, 'views': 4}
+  prod_00000#20260902 {'cart_adds': 4, 'sessions': 7, 'view_seconds': 1540, 'views': 7}
+  prod_00000#20260903 {'cart_adds': 4, 'sessions': 8, 'view_seconds': 1807, 'views': 8}
+  prod_00000#20260904 {'cart_adds': 2, 'sessions': 8, 'view_seconds': 1725, 'views': 7}
+  prod_00000#20260905 {'sessions': 1, 'view_seconds': 681, 'views': 2}
+  prod_00000#20260906 {'cart_adds': 6, 'sessions': 5, 'view_seconds': 2095, 'views': 5}
+  prod_00000#20260907 {'sessions': 3, 'view_seconds': 348, 'views': 3}
+  prod_00000#20260908 {'cart_adds': 6, 'sessions': 6, 'view_seconds': 1262, 'views': 6}
+  prod_00000#20260909 {'cart_adds': 4, 'sessions': 6, 'view_seconds': 1594, 'views': 6}
+  prod_00000#20260910 {'cart_adds': 2, 'sessions': 4, 'view_seconds': 383, 'views': 4}
+
+=== Q5 converted sessions of ALL users (full scan + filter, contrast): 81406 rows in 3553.3 ms ===
+
+saved results/hbase/query_timings.json

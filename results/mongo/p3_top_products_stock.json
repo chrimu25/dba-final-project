@@ -1,0 +1,217 @@
+{
+ "pipeline": [
+  {
+   "$unwind": "$items"
+  },
+  {
+   "$group": {
+    "_id": "$items.product_id",
+    "units": {
+     "$sum": "$items.quantity"
+    },
+    "revenue": {
+     "$sum": "$items.subtotal"
+    },
+    "orders": {
+     "$sum": 1
+    }
+   }
+  },
+  {
+   "$sort": {
+    "units": -1
+   }
+  },
+  {
+   "$limit": 15
+  },
+  {
+   "$lookup": {
+    "from": "products",
+    "localField": "_id",
+    "foreignField": "_id",
+    "as": "p"
+   }
+  },
+  {
+   "$set": {
+    "name": {
+     "$first": "$p.name"
+    },
+    "category": {
+     "$first": "$p.category.name"
+    },
+    "current_stock": {
+     "$first": "$p.current_stock"
+    },
+    "is_active": {
+     "$first": "$p.is_active"
+    },
+    "revenue": {
+     "$round": [
+      "$revenue",
+      2
+     ]
+    }
+   }
+  },
+  {
+   "$project": {
+    "p": 0
+   }
+  }
+ ],
+ "seconds": 0.553,
+ "result": [
+  {
+   "_id": "prod_00283",
+   "units": 661,
+   "revenue": 121352.99,
+   "orders": 323,
+   "name": "Phased 6Thgeneration Productivity",
+   "category": "Preston Ltd",
+   "current_stock": 239,
+   "is_active": true
+  },
+  {
+   "_id": "prod_02892",
+   "units": 649,
+   "revenue": 245270.08,
+   "orders": 323,
+   "name": "Phased Solution-Oriented Policy",
+   "category": "King-Odonnell",
+   "current_stock": 271,
+   "is_active": true
+  },
+  {
+   "_id": "prod_04387",
+   "units": 644,
+   "revenue": 14741.16,
+   "orders": 306,
+   "name": "Decentralized Background Frame",
+   "category": "Moore, Becker and Carlson",
+   "current_stock": 215,
+   "is_active": true
+  },
+  {
+   "_id": "prod_03199",
+   "units": 640,
+   "revenue": 150304.0,
+   "orders": 310,
+   "name": "Mandatory Regional Archive",
+   "category": "Burns-Rodriguez",
+   "current_stock": 17,
+   "is_active": true
+  },
+  {
+   "_id": "prod_01968",
+   "units": 632,
+   "revenue": 230237.6,
+   "orders": 311,
+   "name": "Re-Contextualized Cohesive Core",
+   "category": "King-Odonnell",
+   "current_stock": 182,
+   "is_active": true
+  },
+  {
+   "_id": "prod_03715",
+   "units": 629,
+   "revenue": 104986.39,
+   "orders": 302,
+   "name": "Progressive Intermediate Data-Warehouse",
+   "category": "Rodriguez-Graham",
+   "current_stock": 205,
+   "is_active": true
+  },
+  {
+   "_id": "prod_02728",
+   "units": 628,
+   "revenue": 219008.72,
+   "orders": 303,
+   "name": "Reduced Human-Resource Collaboration",
+   "category": "Preston Ltd",
+   "current_stock": 83,
+   "is_active": true
+  },
+  {
+   "_id": "prod_04548",
+   "units": 628,
+   "revenue": 237076.28,
+   "orders": 314,
+   "name": "Quality-Focused Neutral Hub",
+   "category": "Bush Inc",
+   "current_stock": 45,
+   "is_active": true
+  },
+  {
+   "_id": "prod_00049",
+   "units": 624,
+   "revenue": 34344.96,
+   "orders": 301,
+   "name": "Object-Based Optimizing Open System",
+   "category": "Baldwin Ltd",
+   "current_stock": 191,
+   "is_active": true
+  },
+  {
+   "_id": "prod_02027",
+   "units": 624,
+   "revenue": 170832.48,
+   "orders": 296,
+   "name": "Digitized Value-Added Secured Line",
+   "category": "Patterson, Smith and Jones",
+   "current_stock": 245,
+   "is_active": true
+  },
+  {
+   "_id": "prod_00826",
+   "units": 623,
+   "revenue": 107953.44,
+   "orders": 296,
+   "name": "Profit-Focused Client-Driven Methodology",
+   "category": "Skinner-Romero",
+   "current_stock": 209,
+   "is_active": true
+  },
+  {
+   "_id": "prod_03408",
+   "units": 622,
+   "revenue": 212556.06,
+   "orders": 310,
+   "name": "Operative Dedicated Flexibility",
+   "category": "Burns-Rodriguez",
+   "current_stock": 266,
+   "is_active": true
+  },
+  {
+   "_id": "prod_04675",
+   "units": 621,
+   "revenue": 296589.6,
+   "orders": 298,
+   "name": "Open-Source Bifurcated Knowledgebase",
+   "category": "King-Odonnell",
+   "current_stock": 298,
+   "is_active": true
+  },
+  {
+   "_id": "prod_01614",
+   "units": 620,
+   "revenue": 147870.0,
+   "orders": 302,
+   "name": "Optional Composite Functionalities",
+   "category": "Cameron-Parsons",
+   "current_stock": 142,
+   "is_active": true
+  },
+  {
+   "_id": "prod_03594",
+   "units": 619,
+   "revenue": 200772.65,
+   "orders": 315,
+   "name": "Balanced Fault-Tolerant Instruction Set",
+   "category": "Phillips Inc",
+   "current_stock": 181,
+   "is_active": true
+  }
+ ]
+}

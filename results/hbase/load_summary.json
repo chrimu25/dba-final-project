@@ -1,0 +1,15 @@
+{
+  "sessions_seen": 2000000,
+  "sessions_loaded": 399504,
+  "sample_share": 0.1998,
+  "cells_written": 10403535,
+  "status_in_sample": {
+    "abandoned": 178458,
+    "browsed": 139640,
+    "converted": 81406
+  },
+  "product_metric_rows": 353586,
+  "load_seconds_sessions": 94.4,
+  "load_seconds_metrics": 6.0,
+  "rows_per_second": 4230
+}

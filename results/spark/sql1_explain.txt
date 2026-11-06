@@ -1,0 +1,117 @@
+== Physical Plan ==
+AdaptiveSparkPlan (20)
++- Sort (19)
+   +- Exchange (18)
+      +- Project (17)
+         +- Filter (16)
+            +- Window (15)
+               +- Window (14)
+                  +- Sort (13)
+                     +- Exchange (12)
+                        +- HashAggregate (11)
+                           +- Exchange (10)
+                              +- HashAggregate (9)
+                                 +- Project (8)
+                                    +- BroadcastHashJoin Inner BuildRight (7)
+                                       :- Project (3)
+                                       :  +- Filter (2)
+                                       :     +- Scan parquet  (1)
+                                       +- BroadcastExchange (6)
+                                          +- Filter (5)
+                                             +- Scan parquet  (4)
+
+
+(1) Scan parquet 
+Output [5]: [product_id#318, category_id#319, quantity#320, line_net#323, month#324]
+Batched: true
+Location: InMemoryFileIndex [file:/Volumes/Winner/AUCA/Big Data Analytics/Final_project/lake/transaction_items]
+PushedFilters: [IsNotNull(product_id)]
+ReadSchema: struct<product_id:string,category_id:string,quantity:int,line_net:double>
+
+(2) Filter
+Input [5]: [product_id#318, category_id#319, quantity#320, line_net#323, month#324]
+Condition : isnotnull(product_id#318)
+
+(3) Project
+Output [4]: [product_id#318, category_id#319, quantity#320, line_net#323]
+Input [5]: [product_id#318, category_id#319, quantity#320, line_net#323, month#324]
+
+(4) Scan parquet 
+Output [3]: [product_id#325, product_name#326, category_name#328]
+Batched: true
+Location: InMemoryFileIndex [file:/Volumes/Winner/AUCA/Big Data Analytics/Final_project/lake/products]
+PushedFilters: [IsNotNull(product_id)]
+ReadSchema: struct<product_id:string,product_name:string,category_name:string>
+
+(5) Filter
+Input [3]: [product_id#325, product_name#326, category_name#328]
+Condition : isnotnull(product_id#325)
+
+(6) BroadcastExchange
+Input [3]: [product_id#325, product_name#326, category_name#328]
+Arguments: HashedRelationBroadcastMode(List(input[0, string, false]),false), [plan_id=700]
+
+(7) BroadcastHashJoin
+Left keys [1]: [product_id#318]
+Right keys [1]: [product_id#325]
+Join type: Inner
+Join condition: None
+
+(8) Project
+Output [6]: [product_id#318, category_id#319, quantity#320, line_net#323, product_name#326, category_name#328]
+Input [7]: [product_id#318, category_id#319, quantity#320, line_net#323, product_id#325, product_name#326, category_name#328]
+
+(9) HashAggregate
+Input [6]: [product_id#318, category_id#319, quantity#320, line_net#323, product_name#326, category_name#328]
+Keys [4]: [category_id#319, category_name#328, product_id#318, product_name#326]
+Functions [2]: [partial_sum(line_net#323), partial_sum(quantity#320)]
+Aggregate Attributes [2]: [sum#343, sum#344L]
+Results [6]: [category_id#319, category_name#328, product_id#318, product_name#326, sum#345, sum#346L]
+
+(10) Exchange
+Input [6]: [category_id#319, category_name#328, product_id#318, product_name#326, sum#345, sum#346L]
+Arguments: hashpartitioning(category_id#319, category_name#328, product_id#318, product_name#326, 64), ENSURE_REQUIREMENTS, [plan_id=705]
+
+(11) HashAggregate
+Input [6]: [category_id#319, category_name#328, product_id#318, product_name#326, sum#345, sum#346L]
+Keys [4]: [category_id#319, category_name#328, product_id#318, product_name#326]
+Functions [2]: [sum(line_net#323), sum(quantity#320)]
+Aggregate Attributes [2]: [sum(line_net#323)#265, sum(quantity#320)#266L]
+Results [6]: [category_id#319, category_name#328, product_id#318, product_name#326, sum(line_net#323)#265 AS net_revenue#335, sum(quantity#320)#266L AS units#336L]
+
+(12) Exchange
+Input [6]: [category_id#319, category_name#328, product_id#318, product_name#326, net_revenue#335, units#336L]
+Arguments: hashpartitioning(category_id#319, 64), ENSURE_REQUIREMENTS, [plan_id=708]
+
+(13) Sort
+Input [6]: [category_id#319, category_name#328, product_id#318, product_name#326, net_revenue#335, units#336L]
+Arguments: [category_id#319 ASC NULLS FIRST, net_revenue#335 DESC NULLS LAST], false, 0
+
+(14) Window
+Input [6]: [category_id#319, category_name#328, product_id#318, product_name#326, net_revenue#335, units#336L]
+Arguments: [rank(net_revenue#335) windowspecdefinition(category_id#319, net_revenue#335 DESC NULLS LAST, specifiedwindowframe(RowFrame, unboundedpreceding$(), currentrow$())) AS rnk#340], [category_id#319], [net_revenue#335 DESC NULLS LAST]
+
+(15) Window
+Input [7]: [category_id#319, category_name#328, product_id#318, product_name#326, net_revenue#335, units#336L, rnk#340]
+Arguments: [sum(net_revenue#335) windowspecdefinition(category_id#319, specifiedwindowframe(RowFrame, unboundedpreceding$(), unboundedfollowing$())) AS _we1#341], [category_id#319]
+
+(16) Filter
+Input [8]: [category_id#319, category_name#328, product_id#318, product_name#326, net_revenue#335, units#336L, rnk#340, _we1#341]
+Condition : (rnk#340 <= 3)
+
+(17) Project
+Output [7]: [category_name#328, rnk#340, product_id#318, product_name#326, round(net_revenue#335, 2) AS net_revenue#259, units#336L, round((100.0 * (net_revenue#335 / _we1#341)), 2) AS pct_of_category#260]
+Input [8]: [category_id#319, category_name#328, product_id#318, product_name#326, net_revenue#335, units#336L, rnk#340, _we1#341]
+
+(18) Exchange
+Input [7]: [category_name#328, rnk#340, product_id#318, product_name#326, net_revenue#259, units#336L, pct_of_category#260]
+Arguments: rangepartitioning(category_name#328 ASC NULLS FIRST, rnk#340 ASC NULLS FIRST, 64), ENSURE_REQUIREMENTS, [plan_id=715]
+
+(19) Sort
+Input [7]: [category_name#328, rnk#340, product_id#318, product_name#326, net_revenue#259, units#336L, pct_of_category#260]
+Arguments: [category_name#328 ASC NULLS FIRST, rnk#340 ASC NULLS FIRST], true, 0
+
+(20) AdaptiveSparkPlan
+Output [7]: [category_name#328, rnk#340, product_id#318, product_name#326, net_revenue#259, units#336L, pct_of_category#260]
+Arguments: isFinalPlan=false
+

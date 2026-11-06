@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<configuration>
+  <property><name>hbase.cluster.distributed</name><value>false</value></property>
+  <property><name>hbase.rootdir</name><value>file:///data/hbase</value></property>
+  <property><name>hbase.zookeeper.property.dataDir</name><value>/data/zookeeper</value></property>
+  <property><name>hbase.unsafe.stream.capability.enforce</name><value>false</value></property>
+  <property><name>hbase.thrift.server.socket.read.timeout</name><value>600000</value></property>
+</configuration>

@@ -1,0 +1,1369 @@
+{
+ "pipeline": [
+  {
+   "$project": {
+    "month": {
+     "$dateToString": {
+      "format": "%Y-%m",
+      "date": "$timestamp"
+     }
+    },
+    "ratio": {
+     "$cond": [
+      {
+       "$gt": [
+        "$subtotal",
+        0
+       ]
+      },
+      {
+       "$divide": [
+        "$total",
+        "$subtotal"
+       ]
+      },
+      0
+     ]
+    },
+    "items": 1
+   }
+  },
+  {
+   "$unwind": "$items"
+  },
+  {
+   "$group": {
+    "_id": {
+     "category": "$items.category_id",
+     "month": "$month"
+    },
+    "gross": {
+     "$sum": "$items.subtotal"
+    },
+    "net": {
+     "$sum": {
+      "$multiply": [
+       "$items.subtotal",
+       "$ratio"
+      ]
+     }
+    },
+    "units": {
+     "$sum": "$items.quantity"
+    },
+    "lines": {
+     "$sum": 1
+    }
+   }
+  },
+  {
+   "$facet": {
+    "by_category": [
+     {
+      "$group": {
+       "_id": "$_id.category",
+       "net": {
+        "$sum": "$net"
+       },
+       "gross": {
+        "$sum": "$gross"
+       },
+       "units": {
+        "$sum": "$units"
+       }
+      }
+     },
+     {
+      "$lookup": {
+       "from": "categories",
+       "localField": "_id",
+       "foreignField": "_id",
+       "as": "c"
+      }
+     },
+     {
+      "$set": {
+       "name": {
+        "$first": "$c.name"
+       },
+       "net": {
+        "$round": [
+         "$net",
+         2
+        ]
+       },
+       "gross": {
+        "$round": [
+         "$gross",
+         2
+        ]
+       }
+      }
+     },
+     {
+      "$project": {
+       "c": 0
+      }
+     },
+     {
+      "$sort": {
+       "net": -1
+      }
+     }
+    ],
+    "by_month": [
+     {
+      "$group": {
+       "_id": "$_id.month",
+       "net": {
+        "$sum": "$net"
+       },
+       "units": {
+        "$sum": "$units"
+       }
+      }
+     },
+     {
+      "$set": {
+       "net": {
+        "$round": [
+         "$net",
+         2
+        ]
+       }
+      }
+     },
+     {
+      "$sort": {
+       "_id": 1
+      }
+     }
+    ],
+    "category_month": [
+     {
+      "$set": {
+       "net": {
+        "$round": [
+         "$net",
+         2
+        ]
+       }
+      }
+     },
+     {
+      "$sort": {
+       "_id.category": 1,
+       "_id.month": 1
+      }
+     }
+    ]
+   }
+  }
+ ],
+ "seconds": 1.116,
+ "result": [
+  {
+   "by_category": [
+    {
+     "_id": "cat_005",
+     "net": 21672646.4,
+     "gross": 22221952.21,
+     "units": 80261,
+     "name": "Cameron-Parsons"
+    },
+    {
+     "_id": "cat_004",
+     "net": 21190781.67,
+     "gross": 21715953.62,
+     "units": 86006,
+     "name": "Kelly-Santiago"
+    },
+    {
+     "_id": "cat_014",
+     "net": 20894309.02,
+     "gross": 21434230.58,
+     "units": 86841,
+     "name": "Anderson, Walls and Duncan"
+    },
+    {
+     "_id": "cat_021",
+     "net": 19911910.52,
+     "gross": 20421851.81,
+     "units": 76466,
+     "name": "Mitchell-Kim"
+    },
+    {
+     "_id": "cat_019",
+     "net": 19761996.7,
+     "gross": 20265239.61,
+     "units": 81149,
+     "name": "Powell PLC"
+    },
+    {
+     "_id": "cat_018",
+     "net": 19709030.91,
+     "gross": 20207519.35,
+     "units": 82868,
+     "name": "Phillips Inc"
+    },
+    {
+     "_id": "cat_010",
+     "net": 19651915.95,
+     "gross": 20148872.38,
+     "units": 77591,
+     "name": "Burns-Rodriguez"
+    },
+    {
+     "_id": "cat_012",
+     "net": 19548625.48,
+     "gross": 20032698.63,
+     "units": 80412,
+     "name": "Carney-Santos"
+    },
+    {
+     "_id": "cat_017",
+     "net": 19352053.79,
+     "gross": 19841427.27,
+     "units": 84570,
+     "name": "Hancock Inc"
+    },
+    {
+     "_id": "cat_003",
+     "net": 19231760.3,
+     "gross": 19729270.13,
+     "units": 77784,
+     "name": "Bush Inc"
+    },
+    {
+     "_id": "cat_011",
+     "net": 19187571.61,
+     "gross": 19687441.09,
+     "units": 72499,
+     "name": "Spence PLC"
+    },
+    {
+     "_id": "cat_006",
+     "net": 19039427.8,
+     "gross": 19525723.22,
+     "units": 75204,
+     "name": "Ellis, Baker and Wright"
+    },
+    {
+     "_id": "cat_024",
+     "net": 18907228.06,
+     "gross": 19385010.77,
+     "units": 74486,
+     "name": "Patterson, Smith and Jones"
+    },
+    {
+     "_id": "cat_020",
+     "net": 18843781.94,
+     "gross": 19327963.34,
+     "units": 82815,
+     "name": "Brewer, Bryant and Hickman"
+    },
+    {
+     "_id": "cat_015",
+     "net": 18364288.82,
+     "gross": 18831182.64,
+     "units": 74401,
+     "name": "Owens-Daniel"
+    },
+    {
+     "_id": "cat_022",
+     "net": 18221563.77,
+     "gross": 18694018.11,
+     "units": 75503,
+     "name": "Preston Ltd"
+    },
+    {
+     "_id": "cat_007",
+     "net": 17573247.18,
+     "gross": 18011806.78,
+     "units": 71723,
+     "name": "Moore, Becker and Carlson"
+    },
+    {
+     "_id": "cat_009",
+     "net": 17504367.55,
+     "gross": 17943118.99,
+     "units": 73640,
+     "name": "Skinner-Romero"
+    },
+    {
+     "_id": "cat_001",
+     "net": 17472280.28,
+     "gross": 17914790.08,
+     "units": 75922,
+     "name": "Baldwin Ltd"
+    },
+    {
+     "_id": "cat_008",
+     "net": 17292901.96,
+     "gross": 17726043.37,
+     "units": 74251,
+     "name": "Rodriguez-Graham"
+    },
+    {
+     "_id": "cat_002",
+     "net": 16928615.69,
+     "gross": 17356676.86,
+     "units": 71838,
+     "name": "James LLC"
+    },
+    {
+     "_id": "cat_023",
+     "net": 16835992.51,
+     "gross": 17260397.38,
+     "units": 72418,
+     "name": "King-Odonnell"
+    },
+    {
+     "_id": "cat_013",
+     "net": 16821826.96,
+     "gross": 17255460.45,
+     "units": 68331,
+     "name": "Smith Ltd"
+    },
+    {
+     "_id": "cat_016",
+     "net": 16584096.23,
+     "gross": 16996704.91,
+     "units": 63842,
+     "name": "Wright-Leblanc"
+    },
+    {
+     "_id": "cat_000",
+     "net": 16073942.1,
+     "gross": 16484167.97,
+     "units": 63942,
+     "name": "Rodriguez, Figueroa and Sanchez"
+    }
+   ],
+   "by_month": [
+    {
+     "_id": "2026-08",
+     "net": 121946732.35,
+     "units": 497498
+    },
+    {
+     "_id": "2026-09",
+     "net": 154984906.36,
+     "units": 633402
+    },
+    {
+     "_id": "2026-10",
+     "net": 160805450.36,
+     "units": 656728
+    },
+    {
+     "_id": "2026-11",
+     "net": 28839074.15,
+     "units": 117135
+    }
+   ],
+   "category_month": [
+    {
+     "_id": {
+      "category": "cat_000",
+      "month": "2026-08"
+     },
+     "gross": 4246117.67,
+     "net": 4142349.85,
+     "units": 16361,
+     "lines": 8205
+    },
+    {
+     "_id": {
+      "category": "cat_000",
+      "month": "2026-09"
+     },
+     "gross": 5495536.95,
+     "net": 5354742.8,
+     "units": 21366,
+     "lines": 10712
+    },
+    {
+     "_id": {
+      "category": "cat_000",
+      "month": "2026-10"
+     },
+     "gross": 5715705.87,
+     "net": 5573857.51,
+     "units": 22243,
+     "lines": 11152
+    },
+    {
+     "_id": {
+      "category": "cat_000",
+      "month": "2026-11"
+     },
+     "gross": 1026807.48,
+     "net": 1002991.94,
+     "units": 3972,
+     "lines": 1991
+    },
+    {
+     "_id": {
+      "category": "cat_001",
+      "month": "2026-08"
+     },
+     "gross": 4694401.29,
+     "net": 4579678.19,
+     "units": 20135,
+     "lines": 10030
+    },
+    {
+     "_id": {
+      "category": "cat_001",
+      "month": "2026-09"
+     },
+     "gross": 5980385.54,
+     "net": 5828133.69,
+     "units": 25134,
+     "lines": 12600
+    },
+    {
+     "_id": {
+      "category": "cat_001",
+      "month": "2026-10"
+     },
+     "gross": 6175295.62,
+     "net": 6024043.82,
+     "units": 26190,
+     "lines": 13047
+    },
+    {
+     "_id": {
+      "category": "cat_001",
+      "month": "2026-11"
+     },
+     "gross": 1064707.63,
+     "net": 1040424.58,
+     "units": 4463,
+     "lines": 2235
+    },
+    {
+     "_id": {
+      "category": "cat_002",
+      "month": "2026-08"
+     },
+     "gross": 4495730.29,
+     "net": 4382151.42,
+     "units": 18662,
+     "lines": 9421
+    },
+    {
+     "_id": {
+      "category": "cat_002",
+      "month": "2026-09"
+     },
+     "gross": 5688558.6,
+     "net": 5549151.28,
+     "units": 23591,
+     "lines": 11868
+    },
+    {
+     "_id": {
+      "category": "cat_002",
+      "month": "2026-10"
+     },
+     "gross": 6056695.65,
+     "net": 5908732.36,
+     "units": 25059,
+     "lines": 12589
+    },
+    {
+     "_id": {
+      "category": "cat_002",
+      "month": "2026-11"
+     },
+     "gross": 1115692.32,
+     "net": 1088580.63,
+     "units": 4526,
+     "lines": 2287
+    },
+    {
+     "_id": {
+      "category": "cat_003",
+      "month": "2026-08"
+     },
+     "gross": 5203784.09,
+     "net": 5074004.35,
+     "units": 20512,
+     "lines": 10275
+    },
+    {
+     "_id": {
+      "category": "cat_003",
+      "month": "2026-09"
+     },
+     "gross": 6496461.12,
+     "net": 6329934.5,
+     "units": 25606,
+     "lines": 12760
+    },
+    {
+     "_id": {
+      "category": "cat_003",
+      "month": "2026-10"
+     },
+     "gross": 6804948.61,
+     "net": 6631895.61,
+     "units": 26888,
+     "lines": 13449
+    },
+    {
+     "_id": {
+      "category": "cat_003",
+      "month": "2026-11"
+     },
+     "gross": 1224076.31,
+     "net": 1195925.83,
+     "units": 4778,
+     "lines": 2403
+    },
+    {
+     "_id": {
+      "category": "cat_004",
+      "month": "2026-08"
+     },
+     "gross": 5688829.36,
+     "net": 5547441.77,
+     "units": 22688,
+     "lines": 11419
+    },
+    {
+     "_id": {
+      "category": "cat_004",
+      "month": "2026-09"
+     },
+     "gross": 7260837.39,
+     "net": 7084473.17,
+     "units": 28661,
+     "lines": 14255
+    },
+    {
+     "_id": {
+      "category": "cat_004",
+      "month": "2026-10"
+     },
+     "gross": 7452549.75,
+     "net": 7275756.97,
+     "units": 29462,
+     "lines": 14826
+    },
+    {
+     "_id": {
+      "category": "cat_004",
+      "month": "2026-11"
+     },
+     "gross": 1313737.12,
+     "net": 1283109.75,
+     "units": 5195,
+     "lines": 2606
+    },
+    {
+     "_id": {
+      "category": "cat_005",
+      "month": "2026-08"
+     },
+     "gross": 5760756.83,
+     "net": 5617008.22,
+     "units": 20775,
+     "lines": 10448
+    },
+    {
+     "_id": {
+      "category": "cat_005",
+      "month": "2026-09"
+     },
+     "gross": 7391722.52,
+     "net": 7210138.08,
+     "units": 26707,
+     "lines": 13433
+    },
+    {
+     "_id": {
+      "category": "cat_005",
+      "month": "2026-10"
+     },
+     "gross": 7670042.96,
+     "net": 7482035.96,
+     "units": 27747,
+     "lines": 13793
+    },
+    {
+     "_id": {
+      "category": "cat_005",
+      "month": "2026-11"
+     },
+     "gross": 1399429.9,
+     "net": 1363464.15,
+     "units": 5032,
+     "lines": 2515
+    },
+    {
+     "_id": {
+      "category": "cat_006",
+      "month": "2026-08"
+     },
+     "gross": 5146680.78,
+     "net": 5016920.22,
+     "units": 19664,
+     "lines": 9877
+    },
+    {
+     "_id": {
+      "category": "cat_006",
+      "month": "2026-09"
+     },
+     "gross": 6437142.61,
+     "net": 6277609.09,
+     "units": 25024,
+     "lines": 12580
+    },
+    {
+     "_id": {
+      "category": "cat_006",
+      "month": "2026-10"
+     },
+     "gross": 6729705.65,
+     "net": 6564553.23,
+     "units": 25796,
+     "lines": 12994
+    },
+    {
+     "_id": {
+      "category": "cat_006",
+      "month": "2026-11"
+     },
+     "gross": 1212194.18,
+     "net": 1180345.26,
+     "units": 4720,
+     "lines": 2384
+    },
+    {
+     "_id": {
+      "category": "cat_007",
+      "month": "2026-08"
+     },
+     "gross": 4665915.82,
+     "net": 4555265.31,
+     "units": 18624,
+     "lines": 9325
+    },
+    {
+     "_id": {
+      "category": "cat_007",
+      "month": "2026-09"
+     },
+     "gross": 5978081.93,
+     "net": 5832058.61,
+     "units": 23803,
+     "lines": 11934
+    },
+    {
+     "_id": {
+      "category": "cat_007",
+      "month": "2026-10"
+     },
+     "gross": 6239120.66,
+     "net": 6083562.34,
+     "units": 24831,
+     "lines": 12438
+    },
+    {
+     "_id": {
+      "category": "cat_007",
+      "month": "2026-11"
+     },
+     "gross": 1128688.37,
+     "net": 1102360.92,
+     "units": 4465,
+     "lines": 2245
+    },
+    {
+     "_id": {
+      "category": "cat_008",
+      "month": "2026-08"
+     },
+     "gross": 4760245.2,
+     "net": 4642032.05,
+     "units": 19687,
+     "lines": 9865
+    },
+    {
+     "_id": {
+      "category": "cat_008",
+      "month": "2026-09"
+     },
+     "gross": 5859107.94,
+     "net": 5716301.97,
+     "units": 24546,
+     "lines": 12323
+    },
+    {
+     "_id": {
+      "category": "cat_008",
+      "month": "2026-10"
+     },
+     "gross": 6017861.03,
+     "net": 5877004.93,
+     "units": 25498,
+     "lines": 12781
+    },
+    {
+     "_id": {
+      "category": "cat_008",
+      "month": "2026-11"
+     },
+     "gross": 1088829.2,
+     "net": 1057563.01,
+     "units": 4520,
+     "lines": 2275
+    },
+    {
+     "_id": {
+      "category": "cat_009",
+      "month": "2026-08"
+     },
+     "gross": 4657089.09,
+     "net": 4541726.79,
+     "units": 19126,
+     "lines": 9561
+    },
+    {
+     "_id": {
+      "category": "cat_009",
+      "month": "2026-09"
+     },
+     "gross": 5939507.79,
+     "net": 5793670.36,
+     "units": 24416,
+     "lines": 12191
+    },
+    {
+     "_id": {
+      "category": "cat_009",
+      "month": "2026-10"
+     },
+     "gross": 6177758.07,
+     "net": 6028242.14,
+     "units": 25381,
+     "lines": 12748
+    },
+    {
+     "_id": {
+      "category": "cat_009",
+      "month": "2026-11"
+     },
+     "gross": 1168764.04,
+     "net": 1140728.26,
+     "units": 4717,
+     "lines": 2333
+    },
+    {
+     "_id": {
+      "category": "cat_010",
+      "month": "2026-08"
+     },
+     "gross": 5281163.62,
+     "net": 5152015.67,
+     "units": 20237,
+     "lines": 10101
+    },
+    {
+     "_id": {
+      "category": "cat_010",
+      "month": "2026-09"
+     },
+     "gross": 6697221.31,
+     "net": 6529095.49,
+     "units": 25898,
+     "lines": 12947
+    },
+    {
+     "_id": {
+      "category": "cat_010",
+      "month": "2026-10"
+     },
+     "gross": 6911435.4,
+     "net": 6741737.24,
+     "units": 26627,
+     "lines": 13353
+    },
+    {
+     "_id": {
+      "category": "cat_010",
+      "month": "2026-11"
+     },
+     "gross": 1259052.05,
+     "net": 1229067.55,
+     "units": 4829,
+     "lines": 2415
+    },
+    {
+     "_id": {
+      "category": "cat_011",
+      "month": "2026-08"
+     },
+     "gross": 5205789.21,
+     "net": 5067309.23,
+     "units": 19207,
+     "lines": 9568
+    },
+    {
+     "_id": {
+      "category": "cat_011",
+      "month": "2026-09"
+     },
+     "gross": 6469554.61,
+     "net": 6302336.84,
+     "units": 24027,
+     "lines": 12046
+    },
+    {
+     "_id": {
+      "category": "cat_011",
+      "month": "2026-10"
+     },
+     "gross": 6793657.33,
+     "net": 6627919.88,
+     "units": 24905,
+     "lines": 12492
+    },
+    {
+     "_id": {
+      "category": "cat_011",
+      "month": "2026-11"
+     },
+     "gross": 1218439.94,
+     "net": 1190005.65,
+     "units": 4360,
+     "lines": 2180
+    },
+    {
+     "_id": {
+      "category": "cat_012",
+      "month": "2026-08"
+     },
+     "gross": 5133834.4,
+     "net": 5010863.57,
+     "units": 20677,
+     "lines": 10420
+    },
+    {
+     "_id": {
+      "category": "cat_012",
+      "month": "2026-09"
+     },
+     "gross": 6730942.13,
+     "net": 6573041.2,
+     "units": 26909,
+     "lines": 13439
+    },
+    {
+     "_id": {
+      "category": "cat_012",
+      "month": "2026-10"
+     },
+     "gross": 6918593.35,
+     "net": 6746002.35,
+     "units": 27844,
+     "lines": 13990
+    },
+    {
+     "_id": {
+      "category": "cat_012",
+      "month": "2026-11"
+     },
+     "gross": 1249328.75,
+     "net": 1218718.36,
+     "units": 4982,
+     "lines": 2487
+    },
+    {
+     "_id": {
+      "category": "cat_013",
+      "month": "2026-08"
+     },
+     "gross": 4499443.07,
+     "net": 4385874.45,
+     "units": 17837,
+     "lines": 8922
+    },
+    {
+     "_id": {
+      "category": "cat_013",
+      "month": "2026-09"
+     },
+     "gross": 5749167.32,
+     "net": 5607550.92,
+     "units": 22670,
+     "lines": 11342
+    },
+    {
+     "_id": {
+      "category": "cat_013",
+      "month": "2026-10"
+     },
+     "gross": 5948480.74,
+     "net": 5798013.95,
+     "units": 23677,
+     "lines": 11848
+    },
+    {
+     "_id": {
+      "category": "cat_013",
+      "month": "2026-11"
+     },
+     "gross": 1058369.32,
+     "net": 1030387.64,
+     "units": 4147,
+     "lines": 2069
+    },
+    {
+     "_id": {
+      "category": "cat_014",
+      "month": "2026-08"
+     },
+     "gross": 5595218.61,
+     "net": 5453099.41,
+     "units": 22695,
+     "lines": 11341
+    },
+    {
+     "_id": {
+      "category": "cat_014",
+      "month": "2026-09"
+     },
+     "gross": 7191056.86,
+     "net": 7010594.96,
+     "units": 29226,
+     "lines": 14586
+    },
+    {
+     "_id": {
+      "category": "cat_014",
+      "month": "2026-10"
+     },
+     "gross": 7331615.11,
+     "net": 7148656.66,
+     "units": 29616,
+     "lines": 14832
+    },
+    {
+     "_id": {
+      "category": "cat_014",
+      "month": "2026-11"
+     },
+     "gross": 1316340.0,
+     "net": 1281958.0,
+     "units": 5304,
+     "lines": 2662
+    },
+    {
+     "_id": {
+      "category": "cat_015",
+      "month": "2026-08"
+     },
+     "gross": 4949393.16,
+     "net": 4824257.35,
+     "units": 19507,
+     "lines": 9748
+    },
+    {
+     "_id": {
+      "category": "cat_015",
+      "month": "2026-09"
+     },
+     "gross": 6380748.1,
+     "net": 6218891.19,
+     "units": 25089,
+     "lines": 12571
+    },
+    {
+     "_id": {
+      "category": "cat_015",
+      "month": "2026-10"
+     },
+     "gross": 6340387.33,
+     "net": 6186719.72,
+     "units": 25285,
+     "lines": 12750
+    },
+    {
+     "_id": {
+      "category": "cat_015",
+      "month": "2026-11"
+     },
+     "gross": 1160654.05,
+     "net": 1134420.56,
+     "units": 4520,
+     "lines": 2247
+    },
+    {
+     "_id": {
+      "category": "cat_016",
+      "month": "2026-08"
+     },
+     "gross": 4485644.25,
+     "net": 4375113.73,
+     "units": 16745,
+     "lines": 8375
+    },
+    {
+     "_id": {
+      "category": "cat_016",
+      "month": "2026-09"
+     },
+     "gross": 5670111.43,
+     "net": 5530808.76,
+     "units": 21387,
+     "lines": 10732
+    },
+    {
+     "_id": {
+      "category": "cat_016",
+      "month": "2026-10"
+     },
+     "gross": 5823256.37,
+     "net": 5684087.32,
+     "units": 21803,
+     "lines": 10938
+    },
+    {
+     "_id": {
+      "category": "cat_016",
+      "month": "2026-11"
+     },
+     "gross": 1017692.86,
+     "net": 994086.42,
+     "units": 3907,
+     "lines": 1959
+    },
+    {
+     "_id": {
+      "category": "cat_017",
+      "month": "2026-08"
+     },
+     "gross": 5148466.47,
+     "net": 5022877.83,
+     "units": 21949,
+     "lines": 11067
+    },
+    {
+     "_id": {
+      "category": "cat_017",
+      "month": "2026-09"
+     },
+     "gross": 6640740.7299999995,
+     "net": 6478027.16,
+     "units": 28197,
+     "lines": 14131
+    },
+    {
+     "_id": {
+      "category": "cat_017",
+      "month": "2026-10"
+     },
+     "gross": 6831873.55,
+     "net": 6660427.04,
+     "units": 29250,
+     "lines": 14673
+    },
+    {
+     "_id": {
+      "category": "cat_017",
+      "month": "2026-11"
+     },
+     "gross": 1220346.52,
+     "net": 1190721.76,
+     "units": 5174,
+     "lines": 2590
+    },
+    {
+     "_id": {
+      "category": "cat_018",
+      "month": "2026-08"
+     },
+     "gross": 5212081.15,
+     "net": 5082923.23,
+     "units": 21515,
+     "lines": 10827
+    },
+    {
+     "_id": {
+      "category": "cat_018",
+      "month": "2026-09"
+     },
+     "gross": 6767805.85,
+     "net": 6595070.47,
+     "units": 27527,
+     "lines": 13780
+    },
+    {
+     "_id": {
+      "category": "cat_018",
+      "month": "2026-10"
+     },
+     "gross": 6976832.6,
+     "net": 6807157.13,
+     "units": 28673,
+     "lines": 14368
+    },
+    {
+     "_id": {
+      "category": "cat_018",
+      "month": "2026-11"
+     },
+     "gross": 1250799.75,
+     "net": 1223880.08,
+     "units": 5153,
+     "lines": 2566
+    },
+    {
+     "_id": {
+      "category": "cat_019",
+      "month": "2026-08"
+     },
+     "gross": 5288487.21,
+     "net": 5155136.43,
+     "units": 21077,
+     "lines": 10584
+    },
+    {
+     "_id": {
+      "category": "cat_019",
+      "month": "2026-09"
+     },
+     "gross": 6686917.45,
+     "net": 6519074.91,
+     "units": 27121,
+     "lines": 13576
+    },
+    {
+     "_id": {
+      "category": "cat_019",
+      "month": "2026-10"
+     },
+     "gross": 7053346.37,
+     "net": 6881957.44,
+     "units": 28051,
+     "lines": 14062
+    },
+    {
+     "_id": {
+      "category": "cat_019",
+      "month": "2026-11"
+     },
+     "gross": 1236488.58,
+     "net": 1205827.92,
+     "units": 4900,
+     "lines": 2498
+    },
+    {
+     "_id": {
+      "category": "cat_020",
+      "month": "2026-08"
+     },
+     "gross": 5051875.25,
+     "net": 4928269.82,
+     "units": 21728,
+     "lines": 10801
+    },
+    {
+     "_id": {
+      "category": "cat_020",
+      "month": "2026-09"
+     },
+     "gross": 6440257.37,
+     "net": 6278061.98,
+     "units": 27565,
+     "lines": 13761
+    },
+    {
+     "_id": {
+      "category": "cat_020",
+      "month": "2026-10"
+     },
+     "gross": 6637493.8,
+     "net": 6468147.59,
+     "units": 28413,
+     "lines": 14255
+    },
+    {
+     "_id": {
+      "category": "cat_020",
+      "month": "2026-11"
+     },
+     "gross": 1198336.92,
+     "net": 1169302.54,
+     "units": 5109,
+     "lines": 2554
+    },
+    {
+     "_id": {
+      "category": "cat_021",
+      "month": "2026-08"
+     },
+     "gross": 5346085.01,
+     "net": 5209763.23,
+     "units": 19949,
+     "lines": 10018
+    },
+    {
+     "_id": {
+      "category": "cat_021",
+      "month": "2026-09"
+     },
+     "gross": 6725328.47,
+     "net": 6560192.91,
+     "units": 25366,
+     "lines": 12762
+    },
+    {
+     "_id": {
+      "category": "cat_021",
+      "month": "2026-10"
+     },
+     "gross": 7120875.86,
+     "net": 6942958.47,
+     "units": 26499,
+     "lines": 13276
+    },
+    {
+     "_id": {
+      "category": "cat_021",
+      "month": "2026-11"
+     },
+     "gross": 1229562.47,
+     "net": 1198995.91,
+     "units": 4652,
+     "lines": 2328
+    },
+    {
+     "_id": {
+      "category": "cat_022",
+      "month": "2026-08"
+     },
+     "gross": 4860976.16,
+     "net": 4738466.32,
+     "units": 19663,
+     "lines": 9812
+    },
+    {
+     "_id": {
+      "category": "cat_022",
+      "month": "2026-09"
+     },
+     "gross": 6211884.25,
+     "net": 6053295.66,
+     "units": 24932,
+     "lines": 12551
+    },
+    {
+     "_id": {
+      "category": "cat_022",
+      "month": "2026-10"
+     },
+     "gross": 6485925.54,
+     "net": 6325969.46,
+     "units": 26264,
+     "lines": 13106
+    },
+    {
+     "_id": {
+      "category": "cat_022",
+      "month": "2026-11"
+     },
+     "gross": 1135232.16,
+     "net": 1103832.33,
+     "units": 4644,
+     "lines": 2298
+    },
+    {
+     "_id": {
+      "category": "cat_023",
+      "month": "2026-08"
+     },
+     "gross": 4585644.84,
+     "net": 4463964.2,
+     "units": 18925,
+     "lines": 9492
+    },
+    {
+     "_id": {
+      "category": "cat_023",
+      "month": "2026-09"
+     },
+     "gross": 5622212.42,
+     "net": 5488208.88,
+     "units": 23902,
+     "lines": 11981
+    },
+    {
+     "_id": {
+      "category": "cat_023",
+      "month": "2026-10"
+     },
+     "gross": 5970184.7,
+     "net": 5827967.57,
+     "units": 25101,
+     "lines": 12486
+    },
+    {
+     "_id": {
+      "category": "cat_023",
+      "month": "2026-11"
+     },
+     "gross": 1082355.42,
+     "net": 1055851.86,
+     "units": 4490,
+     "lines": 2227
+    },
+    {
+     "_id": {
+      "category": "cat_024",
+      "month": "2026-08"
+     },
+     "gross": 5104230.6,
+     "net": 4978219.68,
+     "units": 19553,
+     "lines": 9765
+    },
+    {
+     "_id": {
+      "category": "cat_024",
+      "month": "2026-09"
+     },
+     "gross": 6423103.3,
+     "net": 6264441.48,
+     "units": 24732,
+     "lines": 12321
+    },
+    {
+     "_id": {
+      "category": "cat_024",
+      "month": "2026-10"
+     },
+     "gross": 6671086.2,
+     "net": 6508043.66,
+     "units": 25625,
+     "lines": 12792
+    },
+    {
+     "_id": {
+      "category": "cat_024",
+      "month": "2026-11"
+     },
+     "gross": 1186590.67,
+     "net": 1156523.24,
+     "units": 4576,
+     "lines": 2293
+    }
+   ]
+  }
+ ]
+}

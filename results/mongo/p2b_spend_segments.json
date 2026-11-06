@@ -1,0 +1,92 @@
+{
+ "pipeline": [
+  {
+   "$match": {
+    "purchase_summary": {
+     "$exists": true
+    }
+   }
+  },
+  {
+   "$bucketAuto": {
+    "groupBy": "$purchase_summary.spent",
+    "buckets": 5,
+    "output": {
+     "users": {
+      "$sum": 1
+     },
+     "avg_spent": {
+      "$avg": "$purchase_summary.spent"
+     },
+     "avg_orders": {
+      "$avg": "$purchase_summary.orders"
+     },
+     "avg_order_value": {
+      "$avg": "$purchase_summary.avg_order_value"
+     },
+     "avg_recency_days": {
+      "$avg": "$purchase_summary.recency_days"
+     }
+    }
+   }
+  }
+ ],
+ "seconds": 0.017,
+ "result": [
+  {
+   "_id": {
+    "min": 19745.89,
+    "max": 39813.7
+   },
+   "users": 2000,
+   "avg_spent": 35778.998465000004,
+   "avg_orders": 42.0995,
+   "avg_order_value": 855.2071800000001,
+   "avg_recency_days": 2.0425
+  },
+  {
+   "_id": {
+    "min": 39813.7,
+    "max": 44351.74
+   },
+   "users": 2000,
+   "avg_spent": 42195.79234,
+   "avg_orders": 46.8535,
+   "avg_order_value": 906.6063399999999,
+   "avg_recency_days": 1.8595
+  },
+  {
+   "_id": {
+    "min": 44351.74,
+    "max": 48483.24
+   },
+   "users": 2000,
+   "avg_spent": 46385.25896,
+   "avg_orders": 49.997,
+   "avg_order_value": 933.797905,
+   "avg_recency_days": 1.785
+  },
+  {
+   "_id": {
+    "min": 48483.24,
+    "max": 53388.99
+   },
+   "users": 2000,
+   "avg_spent": 50776.325189999996,
+   "avg_orders": 53.047,
+   "avg_order_value": 962.80766,
+   "avg_recency_days": 1.6275
+  },
+  {
+   "_id": {
+    "min": 53388.99,
+    "max": 80881.92
+   },
+   "users": 2000,
+   "avg_spent": 58151.706655,
+   "avg_orders": 58.003,
+   "avg_order_value": 1007.0627900000001,
+   "avg_recency_days": 1.5355
+  }
+ ]
+}

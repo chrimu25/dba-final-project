@@ -1,0 +1,59 @@
+
+=== p1_revenue_by_category_month (1.12 s) ===
+category  name                                   net revenue     units
+cat_005   Cameron-Parsons                      21,672,646.40    80,261
+cat_004   Kelly-Santiago                       21,190,781.67    86,006
+cat_014   Anderson, Walls and Duncan           20,894,309.02    86,841
+cat_021   Mitchell-Kim                         19,911,910.52    76,466
+cat_019   Powell PLC                           19,761,996.70    81,149
+cat_018   Phillips Inc                         19,709,030.91    82,868
+cat_010   Burns-Rodriguez                      19,651,915.95    77,591
+cat_012   Carney-Santos                        19,548,625.48    80,412
+cat_017   Hancock Inc                          19,352,053.79    84,570
+cat_003   Bush Inc                             19,231,760.30    77,784
+cat_011   Spence PLC                           19,187,571.61    72,499
+cat_006   Ellis, Baker and Wright              19,039,427.80    75,204
+cat_024   Patterson, Smith and Jones           18,907,228.06    74,486
+cat_020   Brewer, Bryant and Hickman           18,843,781.94    82,815
+cat_015   Owens-Daniel                         18,364,288.82    74,401
+cat_022   Preston Ltd                          18,221,563.77    75,503
+cat_007   Moore, Becker and Carlson            17,573,247.18    71,723
+cat_009   Skinner-Romero                       17,504,367.55    73,640
+cat_001   Baldwin Ltd                          17,472,280.28    75,922
+cat_008   Rodriguez-Graham                     17,292,901.96    74,251
+cat_002   James LLC                            16,928,615.69    71,838
+cat_023   King-Odonnell                        16,835,992.51    72,418
+cat_013   Smith Ltd                            16,821,826.96    68,331
+cat_016   Wright-Leblanc                       16,584,096.23    63,842
+cat_000   Rodriguez, Figueroa and Sanchez      16,073,942.10    63,942
+by month: [('2026-08', '121,946,732'), ('2026-09', '154,984,906'), ('2026-10', '160,805,450'), ('2026-11', '28,839,074')]
+
+=== p2a_user_summary_merge (0.49 s) ===
+purchase_summary written to 10,000 users (reference date 2026-11-06 13:11)
+example: {'_id': 'user_000000', 'purchase_summary': {'orders': 59, 'spent': 55834.8, 'first_purchase': datetime.datetime(2026, 8, 13, 4, 33, 21, 549000), 'last_purchase': datetime.datetime(2026, 11, 2, 18, 55, 54, 202000), 'session_orders': 28, 'avg_order_value': 946.35, 'recency_days': 4}}
+
+=== p2b_spend_segments (0.02 s) ===
+spend range                 users   avg spent  avg orders   avg AOV  recency d
+19,746 - 39,814              2000      35,779        42.1       855        2.0
+39,814 - 44,352              2000      42,196        46.9       907        1.9
+44,352 - 48,483              2000      46,385        50.0       934        1.8
+48,483 - 53,389              2000      50,776        53.0       963        1.6
+53,389 - 80,882              2000      58,152        58.0     1,007        1.5
+
+=== p3_top_products_stock (0.55 s) ===
+product     name                                  units       revenue  stock  active
+prod_00283  Phased 6Thgeneration Productivity       661    121,352.99    239  True
+prod_02892  Phased Solution-Oriented Policy         649    245,270.08    271  True
+prod_04387  Decentralized Background Frame          644     14,741.16    215  True
+prod_03199  Mandatory Regional Archive              640    150,304.00     17  True
+prod_01968  Re-Contextualized Cohesive Core         632    230,237.60    182  True
+prod_03715  Progressive Intermediate Data-Ware      629    104,986.39    205  True
+prod_02728  Reduced Human-Resource Collaborati      628    219,008.72     83  True
+prod_04548  Quality-Focused Neutral Hub             628    237,076.28     45  True
+prod_00049  Object-Based Optimizing Open Syste      624     34,344.96    191  True
+prod_02027  Digitized Value-Added Secured Line      624    170,832.48    245  True
+prod_00826  Profit-Focused Client-Driven Metho      623    107,953.44    209  True
+prod_03408  Operative Dedicated Flexibility         622    212,556.06    266  True
+prod_04675  Open-Source Bifurcated Knowledgeba      621    296,589.60    298  True
+prod_01614  Optional Composite Functionalities      620    147,870.00    142  True
+prod_03594  Balanced Fault-Tolerant Instructio      619    200,772.65    181  True

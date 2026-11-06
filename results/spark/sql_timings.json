@@ -1,0 +1,8 @@
+{
+  "SQL1 top 3 products per category": 2.85,
+  "SQL2 weekly revenue trend": 0.46,
+  "SQL3 device x referrer purchase rate": 0.55,
+  "load MongoDB users (pymongo)": 0.2,
+  "load HBase sessions sample (happybase)": 3.92,
+  "SQL4 MongoDB x HBase join": 0.53
+}

@@ -1,0 +1,8 @@
+# HBase shell examples. Replace user_000042 / prod_00001 with keys printed by queries_hbase.py
+# Run:  docker exec -it hbase hbase shell     then paste lines
+count 'product_metrics', INTERVAL => 100000
+scan 'user_sessions', {ROWPREFIXFILTER => 'user_000042#', COLUMNS => ['s'], LIMIT => 5}
+scan 'user_sessions', {ROWPREFIXFILTER => 'user_000042#', COLUMNS => ['v'], LIMIT => 1}
+scan 'product_metrics', {STARTROW => 'prod_00001#20260901', STOPROW => 'prod_00001#20261001'}
+get 'product_metrics', 'prod_00001#20260915'
+scan 'user_sessions', {FILTER => "SingleColumnValueFilter('s','conversion_status',=,'binary:converted',true,true)", COLUMNS => ['s:conversion_status'], LIMIT => 5}

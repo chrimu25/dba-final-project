@@ -1,0 +1,25 @@
+Saving datasets...
+
+Dataset generation complete!
+- Sessions: 2,000,000 (target: 2,000,000)
+- Transactions: 500,000 (target: 500,000)
+- Remaining products: 643,236
+
+      338.99 real       275.62 user        43.05 sys
+          6469877760  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+            12597173  page reclaims
+                 374  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+               17469  voluntary context switches
+              341689  involuntary context switches
+       3645483623132  instructions retired
+        998454988310  cycles elapsed
+          9836743936  peak memory footprint

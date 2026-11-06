@@ -1,0 +1,17 @@
+# Run with:  docker exec -i hbase hbase shell -n < hbase/create_tables.hbase
+# user_sessions  row key  <user_id>#<9999999999 - start_epoch_s>#<session_id>
+#   s  session summary (device, geo, duration, referrer, status, counts) - small, read for most queries
+#   v  page views, one cell per view: v:p000, v:p001 ... (sparse: 1-15 per session) - large, read only when needed
+#   c  cart contents, one cell per product: c:<product_id> = quantity (sparse: most sessions have none)
+# product_metrics row key  <product_id>#<yyyymmdd>
+#   m  daily counters: views, view_seconds, cart_adds, sessions
+disable 'user_sessions' rescue nil
+drop 'user_sessions' rescue nil
+disable 'product_metrics' rescue nil
+drop 'product_metrics' rescue nil
+create 'user_sessions', {NAME => 's', VERSIONS => 1, BLOOMFILTER => 'ROW'}, {NAME => 'v', VERSIONS => 1, COMPRESSION => 'GZ'}, {NAME => 'c', VERSIONS => 1}
+create 'product_metrics', {NAME => 'm', VERSIONS => 1, BLOOMFILTER => 'ROW'}
+list
+describe 'user_sessions'
+describe 'product_metrics'
+exit

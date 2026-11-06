@@ -1,0 +1,130 @@
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+java.io.FileNotFoundException: File data/sessions_*.json does not exist
+	at org.apache.hadoop.fs.RawLocalFileSystem.deprecatedGetFileStatus(RawLocalFileSystem.java:980)
+	at org.apache.hadoop.fs.RawLocalFileSystem.getFileLinkStatusInternal(RawLocalFileSystem.java:1301)
+	at org.apache.hadoop.fs.RawLocalFileSystem.getFileStatus(RawLocalFileSystem.java:970)
+	at org.apache.hadoop.fs.FilterFileSystem.getFileStatus(FilterFileSystem.java:462)
+	at org.apache.spark.sql.execution.streaming.sinks.FileStreamSink$.hasMetadata(FileStreamSink.scala:58)
+	at org.apache.spark.sql.execution.datasources.DataSource.resolveRelation(DataSource.scala:384)
+	at org.apache.spark.sql.catalyst.analysis.ResolveDataSource.org$apache$spark$sql$catalyst$analysis$ResolveDataSource$$loadV1BatchSource(ResolveDataSource.scala:143)
+	at org.apache.spark.sql.catalyst.analysis.ResolveDataSource$$anonfun$apply$1.$anonfun$applyOrElse$2(ResolveDataSource.scala:61)
+	at scala.Option.getOrElse(Option.scala:201)
+	at org.apache.spark.sql.catalyst.analysis.ResolveDataSource$$anonfun$apply$1.applyOrElse(ResolveDataSource.scala:61)
+	at org.apache.spark.sql.catalyst.analysis.ResolveDataSource$$anonfun$apply$1.applyOrElse(ResolveDataSource.scala:45)
+	at org.apache.spark.sql.catalyst.plans.logical.AnalysisHelper.$anonfun$resolveOperatorsUpWithPruning$3(AnalysisHelper.scala:139)
+	at org.apache.spark.sql.catalyst.trees.CurrentOrigin$.withOrigin(origin.scala:107)
+	at org.apache.spark.sql.catalyst.plans.logical.AnalysisHelper.$anonfun$resolveOperatorsUpWithPruning$1(AnalysisHelper.scala:139)
+	at org.apache.spark.sql.catalyst.plans.logical.AnalysisHelper$.allowInvokingTransformsInAnalyzer(AnalysisHelper.scala:416)
+	at org.apache.spark.sql.catalyst.plans.logical.AnalysisHelper.resolveOperatorsUpWithPruning(AnalysisHelper.scala:135)
+	at org.apache.spark.sql.catalyst.plans.logical.AnalysisHelper.resolveOperatorsUpWithPruning$(AnalysisHelper.scala:131)
+	at org.apache.spark.sql.catalyst.plans.logical.LogicalPlan.resolveOperatorsUpWithPruning(LogicalPlan.scala:37)
+	at org.apache.spark.sql.catalyst.plans.logical.AnalysisHelper.resolveOperatorsUp(AnalysisHelper.scala:112)
+	at org.apache.spark.sql.catalyst.plans.logical.AnalysisHelper.resolveOperatorsUp$(AnalysisHelper.scala:111)
+	at org.apache.spark.sql.catalyst.plans.logical.LogicalPlan.resolveOperatorsUp(LogicalPlan.scala:37)
+	at org.apache.spark.sql.catalyst.analysis.ResolveDataSource.apply(ResolveDataSource.scala:45)
+	at org.apache.spark.sql.catalyst.analysis.ResolveDataSource.apply(ResolveDataSource.scala:43)
+	at org.apache.spark.sql.catalyst.rules.RuleExecutor.$anonfun$execute$2(RuleExecutor.scala:248)
+	at scala.collection.LinearSeqOps.foldLeft(LinearSeq.scala:183)
+	at scala.collection.LinearSeqOps.foldLeft$(LinearSeq.scala:179)
+	at scala.collection.immutable.List.foldLeft(List.scala:79)
+	at org.apache.spark.sql.catalyst.rules.RuleExecutor.$anonfun$execute$1(RuleExecutor.scala:245)
+	at org.apache.spark.sql.catalyst.rules.RuleExecutor.$anonfun$execute$1$adapted(RuleExecutor.scala:237)
+	at scala.collection.immutable.List.foreach(List.scala:323)
+	at org.apache.spark.sql.catalyst.rules.RuleExecutor.execute(RuleExecutor.scala:237)
+	at org.apache.spark.sql.catalyst.analysis.Analyzer.org$apache$spark$sql$catalyst$analysis$Analyzer$$executeSameContext(Analyzer.scala:343)
+	at org.apache.spark.sql.catalyst.analysis.Analyzer.$anonfun$execute$1(Analyzer.scala:339)
+	at org.apache.spark.sql.catalyst.analysis.AnalysisContext$.withNewAnalysisContext(Analyzer.scala:224)
+	at org.apache.spark.sql.catalyst.analysis.Analyzer.execute(Analyzer.scala:339)
+	at org.apache.spark.sql.catalyst.analysis.Analyzer.execute(Analyzer.scala:289)
+	at org.apache.spark.sql.catalyst.rules.RuleExecutor.$anonfun$executeAndTrack$1(RuleExecutor.scala:207)
+	at org.apache.spark.sql.catalyst.QueryPlanningTracker$.withTracker(QueryPlanningTracker.scala:89)
+	at org.apache.spark.sql.catalyst.rules.RuleExecutor.executeAndTrack(RuleExecutor.scala:207)
+	at org.apache.spark.sql.catalyst.analysis.resolver.HybridAnalyzer.resolveInFixedPoint(HybridAnalyzer.scala:236)
+	at org.apache.spark.sql.catalyst.analysis.resolver.HybridAnalyzer.$anonfun$apply$1(HybridAnalyzer.scala:91)
+	at org.apache.spark.sql.catalyst.analysis.resolver.HybridAnalyzer.withTrackedAnalyzerBridgeState(HybridAnalyzer.scala:122)
+	at org.apache.spark.sql.catalyst.analysis.resolver.HybridAnalyzer.apply(HybridAnalyzer.scala:84)
+	at org.apache.spark.sql.catalyst.analysis.Analyzer.$anonfun$executeAndCheck$1(Analyzer.scala:322)
+	at org.apache.spark.sql.catalyst.plans.logical.AnalysisHelper$.markInAnalyzer(AnalysisHelper.scala:423)
+	at org.apache.spark.sql.catalyst.analysis.Analyzer.executeAndCheck(Analyzer.scala:322)
+	at org.apache.spark.sql.execution.QueryExecution.$anonfun$lazyAnalyzed$2(QueryExecution.scala:139)
+	at org.apache.spark.sql.catalyst.QueryPlanningTracker.measurePhase(QueryPlanningTracker.scala:148)
+	at org.apache.spark.sql.execution.QueryExecution.$anonfun$executePhase$2(QueryExecution.scala:330)
+	at org.apache.spark.sql.execution.QueryExecution$.withInternalError(QueryExecution.scala:717)
+	at org.apache.spark.sql.execution.QueryExecution.$anonfun$executePhase$1(QueryExecution.scala:330)
+	at org.apache.spark.sql.SparkSession.withActive(SparkSession.scala:804)
+	at org.apache.spark.sql.execution.QueryExecution.executePhase(QueryExecution.scala:329)
+	at org.apache.spark.sql.execution.QueryExecution.$anonfun$lazyAnalyzed$1(QueryExecution.scala:139)
+	at scala.util.Try$.apply(Try.scala:217)
+	at org.apache.spark.util.Utils$.doTryWithCallerStacktrace(Utils.scala:1392)
+	at org.apache.spark.util.LazyTry.tryT$lzycompute(LazyTry.scala:46)
+	at org.apache.spark.util.LazyTry.tryT(LazyTry.scala:46)
+	at org.apache.spark.util.LazyTry.get(LazyTry.scala:58)
+	at org.apache.spark.sql.execution.QueryExecution.analyzed(QueryExecution.scala:150)
+	at org.apache.spark.sql.execution.QueryExecution.assertAnalyzed(QueryExecution.scala:90)
+	at org.apache.spark.sql.classic.Dataset$.$anonfun$ofRows$1(Dataset.scala:114)
+	at org.apache.spark.sql.SparkSession.withActive(SparkSession.scala:804)
+	at org.apache.spark.sql.classic.Dataset$.ofRows(Dataset.scala:112)
+	at org.apache.spark.sql.classic.DataFrameReader.load(DataFrameReader.scala:108)
+	at org.apache.spark.sql.classic.DataFrameReader.load(DataFrameReader.scala:57)
+	at org.apache.spark.sql.DataFrameReader.json(DataFrameReader.scala:296)
+	at org.apache.spark.sql.classic.DataFrameReader.json(DataFrameReader.scala:149)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:75)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:52)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at py4j.reflection.MethodInvoker.invoke(MethodInvoker.java:244)
+	at py4j.reflection.ReflectionEngine.invoke(ReflectionEngine.java:374)
+	at py4j.Gateway.invoke(Gateway.java:282)
+	at py4j.commands.AbstractCommand.invokeMethod(AbstractCommand.java:132)
+	at py4j.commands.CallCommand.execute(CallCommand.java:79)
+	at py4j.ClientServerConnection.waitForCommands(ClientServerConnection.java:184)
+	at py4j.ClientServerConnection.run(ClientServerConnection.java:108)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+[Stage 5:>                                                          (0 + 1) / 1]                                                                                [Stage 15:>                                                         (0 + 1) / 1]                                                                                [Stage 16:>                                                         (0 + 1) / 1][Stage 18:>                                                         (0 + 8) / 9][Stage 18:===================================================>      (8 + 1) / 9]                                                                                [Stage 19:>                                                         (0 + 1) / 1][Stage 24:>                                                         (0 + 8) / 8]                                                                                [Stage 25:>                 (0 + 1) / 1][Stage 26:>                (0 + 7) / 20][Stage 26:>                                                        (0 + 8) / 20][Stage 26:>                (0 + 8) / 20][Stage 28:>                 (0 + 0) / 8][Stage 26:==>              (3 + 8) / 20][Stage 28:>                 (0 + 0) / 8][Stage 26:=====>           (7 + 8) / 20][Stage 28:>                 (0 + 0) / 8][Stage 26:======>          (8 + 8) / 20][Stage 28:>                 (0 + 0) / 8][Stage 26:========>       (10 + 8) / 20][Stage 28:>                 (0 + 0) / 8][Stage 26:========>       (11 + 8) / 20][Stage 28:>                 (0 + 0) / 8][Stage 26:============>   (15 + 5) / 20][Stage 28:>                 (0 + 3) / 8][Stage 26:============>   (15 + 5) / 20][Stage 28:======>           (3 + 3) / 8][Stage 26:============>   (15 + 5) / 20][Stage 28:=============>    (6 + 2) / 8][Stage 26:============>   (15 + 5) / 20][Stage 28:===============>  (7 + 1) / 8][Stage 26:============================================>           (16 + 4) / 20][Stage 26:============>   (16 + 4) / 20][Stage 31:>                 (0 + 3) / 3][Stage 26:============>   (16 + 4) / 20][Stage 31:============>     (2 + 1) / 3]                                                                                [Stage 26:============================================>           (16 + 4) / 20][Stage 26:===============================================>        (17 + 3) / 20][Stage 26:==================================================>     (18 + 2) / 20][Stage 33:>                                                        (0 + 8) / 22][Stage 33:==================>                                      (7 + 8) / 22][Stage 33:====================>                                    (8 + 8) / 22][Stage 33:=========================>                              (10 + 8) / 22][Stage 33:===================================>                    (14 + 8) / 22][Stage 33:========================================>               (16 + 6) / 22][Stage 33:===========================================>            (17 + 5) / 22][Stage 33:================================================>       (19 + 3) / 22]                                                                                [Stage 34:>                                                        (0 + 8) / 20][Stage 34:=====>                                                   (2 + 8) / 20][Stage 34:========>                                                (3 + 8) / 20][Stage 34:===========>                                             (4 + 8) / 20][Stage 34:===================>                                     (7 + 8) / 20][Stage 34:======================>                                  (8 + 8) / 20][Stage 34:============================>                           (10 + 8) / 20][Stage 34:==============================>                         (11 + 8) / 20][Stage 34:=================================>                      (12 + 8) / 20][Stage 34:====================================>                   (13 + 7) / 20][Stage 34:==========================================>             (15 + 5) / 20][Stage 34:============================================>           (16 + 4) / 20][Stage 34:=====================================================>  (19 + 1) / 20][Stage 36:>                                                        (0 + 8) / 13][Stage 36:=====================>                                   (5 + 8) / 13][Stage 36:==========================>                              (6 + 7) / 13][Stage 36:===================================>                     (8 + 5) / 13][Stage 36:=======================================>                 (9 + 4) / 13]                                                                                [Stage 37:>                                                        (0 + 8) / 20][Stage 37:==>                                                      (1 + 8) / 20][Stage 37:======================>                                  (8 + 8) / 20][Stage 37:=========================>                               (9 + 8) / 20][Stage 37:============================================>           (16 + 4) / 20][Stage 39:>                                                         (0 + 8) / 9][Stage 39:===================>                                      (3 + 6) / 9][Stage 39:===================================================>      (8 + 1) / 9]                                                                                Writing Parquet tables:
+  categories                                   1.18 s
+  subcategories                                0.20 s
+  products                                     0.56 s
+  users                                        1.02 s
+  transactions                                 6.78 s
+  transaction_items                            5.53 s
+  sessions (2M, reads 3.7 GB JSON)            56.20 s
+  page_views (exploded)                       42.68 s
+  cart_items (exploded map)                   12.21 s
+
+Data quality:
+{
+  "transactions_raw": 500000,
+  "users": 10000,
+  "products": 5000,
+  "categories": 25,
+  "subcategories": 109,
+  "transactions": 500000,
+  "transaction_items": 954134,
+  "sessions": 2000000,
+  "page_views": 19999622,
+  "cart_items": 2073113,
+  "tx_items_mismatch": 0,
+  "tx_total_mismatch": 0,
+  "tx_by_channel": {
+    "session": 256611,
+    "direct": 243389
+  },
+  "tx_status": {
+    "processing": 60933,
+    "completed": 317055,
+    "delivered": 61226,
+    "shipped": 60786
+  },
+  "items_without_product": 0,
+  "sessions_duration_mismatch": 0,
+  "sessions_by_status": {
+    "converted": 405887,
+    "abandoned": 892868,
+    "browsed": 701245
+  },
+  "converted_sessions_without_transaction": 149276,
+  "page_views_without_product": 13082111,
+  "users_last_active_before_registration": 0,
+  "users_without_transactions": 0
+}

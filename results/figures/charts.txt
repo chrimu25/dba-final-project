@@ -1,0 +1,8 @@
+saved results/figures/fig1_revenue_by_category.png
+saved results/figures/fig2_weekly_revenue.png
+saved results/figures/fig3_customer_segments.png
+saved results/figures/fig4_conversion_funnel.png
+saved results/figures/fig5_flag_vs_real_by_device.png
+saved results/figures/fig6_cohort_heatmap.png
+saved results/figures/fig7_viewed_vs_selling.png
+views-units correlation r = 0.818 | overlap of top-50 viewed and top-50 selling: 4

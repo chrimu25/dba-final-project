@@ -1,0 +1,35 @@
+{
+  "transactions_raw": 500000,
+  "users": 10000,
+  "products": 5000,
+  "categories": 25,
+  "subcategories": 109,
+  "transactions": 500000,
+  "transaction_items": 954134,
+  "sessions": 2000000,
+  "page_views": 19999622,
+  "cart_items": 2073113,
+  "tx_items_mismatch": 0,
+  "tx_total_mismatch": 0,
+  "tx_by_channel": {
+    "session": 256611,
+    "direct": 243389
+  },
+  "tx_status": {
+    "processing": 60933,
+    "completed": 317055,
+    "delivered": 61226,
+    "shipped": 60786
+  },
+  "items_without_product": 0,
+  "sessions_duration_mismatch": 0,
+  "sessions_by_status": {
+    "converted": 405887,
+    "abandoned": 892868,
+    "browsed": 701245
+  },
+  "converted_sessions_without_transaction": 149276,
+  "page_views_without_product": 13082111,
+  "users_last_active_before_registration": 0,
+  "users_without_transactions": 0
+}

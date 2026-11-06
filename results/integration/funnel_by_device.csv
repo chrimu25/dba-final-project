@@ -1,0 +1,4 @@
+device_type,sessions,viewed_product,added_to_cart,reached_checkout,flagged_converted,purchased,viewed_product_pct,added_to_cart_pct,reached_checkout_pct,flagged_converted_pct,purchased_pct
+tablet,134069,132434,87346,58766,27414,17496,98.78,65.15,43.83,20.45,13.05
+desktop,132903,131250,86168,58171,26993,17070,98.76,64.84,43.77,20.31,12.84
+mobile,132532,130958,86272,57833,26999,17093,98.81,65.1,43.64,20.37,12.9

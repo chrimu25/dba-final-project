@@ -1,0 +1,27 @@
+{
+  "counts": {
+    "categories": 25,
+    "products": 5000,
+    "users": 10000,
+    "transactions": 500000
+  },
+  "seconds": {
+    "categories": 0.05,
+    "products": 0.09,
+    "users": 0.11,
+    "transactions": 6.16,
+    "indexes": 1.85
+  },
+  "storage_mb": {
+    "categories": 0.01,
+    "products": 0.48,
+    "users": 0.47,
+    "transactions": 34.2
+  },
+  "index_mb": {
+    "categories": 0.01,
+    "products": 0.13,
+    "users": 0.13,
+    "transactions": 29.83
+  }
+}

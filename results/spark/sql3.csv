@@ -1,0 +1,16 @@
+device_type,referrer,sessions,flagged_converted_pct,real_purchase_pct,avg_minutes
+tablet,email,133686,20.5,12.99,30.2
+tablet,social,133727,20.35,12.97,30.2
+desktop,direct,133298,20.42,12.92,30.2
+tablet,direct,133495,20.47,12.91,30.2
+mobile,direct,133125,20.42,12.88,30.2
+tablet,search_engine,133533,20.29,12.85,30.3
+desktop,search_engine,132830,20.32,12.84,30.2
+mobile,search_engine,132943,20.25,12.84,30.2
+mobile,social,133395,20.2,12.83,30.2
+desktop,email,133148,20.24,12.83,30.3
+mobile,affiliate,133370,20.25,12.8,30.3
+tablet,affiliate,133653,20.3,12.79,30.3
+mobile,email,133101,20.13,12.69,30.3
+desktop,social,133477,20.26,12.69,30.3
+desktop,affiliate,133219,20.0,12.62,30.1

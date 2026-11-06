@@ -1,0 +1,11 @@
+{
+  "categories": 1.18,
+  "subcategories": 0.2,
+  "products": 0.56,
+  "users": 1.02,
+  "transactions": 6.78,
+  "transaction_items": 5.53,
+  "sessions (2M, reads 3.7 GB JSON)": 56.2,
+  "page_views (exploded)": 42.68,
+  "cart_items (exploded map)": 12.21
+}
