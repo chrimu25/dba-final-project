@@ -1,6 +1,6 @@
 # Distributed Multi-Model Analytics for E-commerce Data
 
-AUCA MSc Big Data Analytics, final project (individual): **Mugabo** · Student ID: _[ID]_ · Report: `Final_Project_Report.pdf`
+AUCA MSc Big Data Analytics, final project (individual): **Mugabo** · Student ID: _101226_
 
 MongoDB (document store), HBase (wide-column store) and Apache Spark (processing and integration) applied to a
 synthetic e-commerce dataset: 10,000 users, 5,000 products, 2,000,000 sessions and 500,000 transactions over 90 days.
